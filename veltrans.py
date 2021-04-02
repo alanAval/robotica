@@ -25,9 +25,11 @@ def veltrans(brela, vrela):
     x = mount(brela)
     return x @ vrela
 
-brela = np.array([[0.866, -0.5, 0, 10], [0.5, 0.866, 0, 5], [0, 0, 1, 0], [0, 0, 0, 1]])
-vrela = np.array([10, 5, 0, 0, 0, 5])
 
-print(brela)
-print(vrela)
-print(veltrans(brela, vrela.transpose()))
+#examples
+# brela = np.array([[0.866, -0.5, 0, 10], [0.5, 0.866, 0, 5], [0, 0, 1, 0], [0, 0, 0, 1]])
+# vrela = np.array([10, 5, 0, 0, 0, 5])
+
+# print(brela)
+# print(vrela)
+# print(veltrans(brela, vrela.transpose()))
