@@ -1,8 +1,6 @@
 import numpy as np
-l1 = 0.5
-l2 = 0.5
 
-def jacobian(theta):
+def jacobian(l1, l2, theta):
     s2 = np.sin(theta[1])
     s3 = np.sin(theta[2])
     c2 = np.cos(theta[1])
@@ -18,7 +16,7 @@ theta1 = 20
 theta2 = -10
 theta3 = 12
 
-j = jacobian(np.array([theta1, theta2, theta3]) * np.pi / 180)
+j = jacobian(0.5, 0.5, np.array([theta1, theta2, theta3]) * np.pi / 180)
 print(j)
 
 

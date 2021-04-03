@@ -1,20 +1,26 @@
 import numpy as np
-l1 = 0.65
-l2 = 0.22
+import jacobian as jb
+import veltrans as vt
 
-def jacobian(theta):
-    s2 = np.sin(theta[1])
-    c2 = np.cos(theta[1])
-    return np.array([
-        [(l1*s2), 0],
-        [l1*c2 + l2, l2]])
-
-
-
-theta1 = 0
-theta2 = 16.28
-theta3 = 30
-
-j = jacobian(np.array([theta1, theta2, theta3]) * np.pi / 180)
-
+j = jb.jacobian(0, 0.65, np.array([0, 16.28, 30]) * np.pi / 180)
 print(j)
+
+vl = j @ (np.array([20, -10, 12]) * np.pi / 180)
+print(vl)
+
+omega = np.array([0, 0, 20 - 10 + 12])
+
+vw = np.concatenate((vl, omega))
+
+print(vw)
+
+t = np.array([[np.sqrt(3)/2, -1/2, 0, ((2 - np.sqrt(3))/20)], 
+               [1/2, np.sqrt(3)/2, 0, ((-1 -2*np.sqrt(3))/20)],
+               [0, 0, 1, 0],
+               [0, 0, 0, 1]])
+
+print(t)
+
+
+vT = vt.veltrans(t, vw)
+print(vT)
