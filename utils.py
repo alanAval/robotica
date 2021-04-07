@@ -12,21 +12,17 @@ def transform_point(p_org, theta, p):
     return t @ np.concatenate((p, [1]), axis= 0)
 
 def draw_labels(x, y):
-    pyplot.text(x[0], y[0], 'B', horizontalAlignment= 'right')
-    pyplot.text(x[1], y[1], 'S', horizontalAlignment= 'left')
+    pyplot.text(x[0], y[0], 'B')
+    pyplot.text(x[1], y[1], 'I')
     pyplot.text(x[2], y[2], 'W')
     pyplot.text(x[3], y[3], 'T')
 
 
-def plot_robot(x, y, title="", axis=[-1, 1, -1, 1]):
+def plot_robot(x, y, title=""):
     pyplot.plot(x, y, 'xb')
     pyplot.plot(x, y, '-r')
-
-    pyplot.axis(axis)
     pyplot.title(title)
     draw_labels(x, y)
-
-    pyplot.show()
 
 def jacobian(l1, l2, theta):
     s2 = np.sin(theta[1])
@@ -37,3 +33,20 @@ def jacobian(l1, l2, theta):
         [(l1*s2*c3) + (l1*c2*s3) + (l2*s3), l2*s3, 0],
         [(-l1*s2*s3) + (l1*c2*c3) + (l2*c3), l2*c3, 0],
         [0, 0, 0]])
+
+def inverse_kinemactics(T, l1, l2):
+    theta = np.array([[0.0, 0.0, 0.0],[0.0, 0.0, 0.0]])
+    x = T[0][3]
+    y = T[1][3]
+    c2 = (x*x + y*y - l1*l1 - l2*l2)/(2*l1*l2)
+    s2 = np.sqrt(1 - c2*c2)
+    theta[0][1] = np.arctan(s2/c2)
+    theta[1][1] = -np.arctan(s2/c2)
+    k1 = l1 + l2*c2
+    k2 = l2*s2
+    theta[0][0] = np.arctan(y / x) - np.arctan(k2/k1)
+    theta[1][0] = np.arctan(y / x) + np.arctan(k2/k1)
+    phi = np.arccos(T[0][0])
+    theta[0][2] = phi - theta[0][0] - theta[0][1]
+    theta[1][2] = phi - theta[1][0] - theta[1][1]
+    return theta
