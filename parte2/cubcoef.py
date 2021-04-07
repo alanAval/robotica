@@ -22,7 +22,7 @@ def cubcoef(th0, thf, thdot0, thdotf, tf):
 def cubcoefs(splines, tf, Twt, l1, l2):
     thdot0 = np.zeros(3)
     theta = np.array([])
-    tp = tf / len(splines) - 1
+    tp = tf / (len(splines) - 1)
     for i in range(len(splines)):
         Tws = utils.transform_frame(Twt, splines[i])
         thetai = np.array([utils.inverse_kinemactics(Tws, l1, l2)[0]])
@@ -51,8 +51,9 @@ def cubcoefs(splines, tf, Twt, l1, l2):
             coef = np.array([coefi])
         else:
             coef = np.concatenate((coef, np.array([coefi])), axis=0)
-    print("------------Coeficientes-----------")
-    print(coef)
+    return coef
 
 
-cubcoefs(np.array([[0.758, 0.173, 0], [0.6, -0.3, 45], [-0.4, 0.3, 120]]), 1, np.array([0.1, 0.2, 30.0]), 0.5, 0.5)
+# coef = cubcoefs(np.array([[0.758, 0.173, 0], [0.6, -0.3, 45], [-0.4, 0.3, 120]]), 1, np.array([0.1, 0.2, 30.0]), 0.5, 0.5)
+# print("------------Coeficientes-----------")
+# print(coef)
