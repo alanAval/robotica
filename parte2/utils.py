@@ -52,8 +52,8 @@ def inverse_kinemactics(T, l1, l2):
     return theta
 
 def mount(x, y, theta):
-    stheta = np.sin(theta)
-    ctheta = np.cos(theta)
+    stheta = np.sin(theta * np.pi / 180)
+    ctheta = np.cos(theta * np.pi / 180)
 
     return np.array([[ctheta, -stheta, 0, x],
                    [stheta, ctheta, 0, y],
@@ -64,4 +64,4 @@ def transform_frame(tab, tac):
     Tab = mount(tab[0], tab[1], tab[2])
     Tac = mount(tac[0], tac[1], tac[2])
 
-    return Tac @ np.invert(Tab)
+    return Tac @ np.linalg.inv(Tab)
