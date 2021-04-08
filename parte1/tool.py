@@ -18,8 +18,8 @@ def solve_tool(theta, option):
 
     print("Velocidade W,W: \n" + str(vw))
 
-    t = np.array([[np.sqrt(3)/2, -1/2, 0, ((2 - np.sqrt(3))/20)], 
-                [1/2, np.sqrt(3)/2, 0, ((-1 -2*np.sqrt(3))/20)],
+    t = np.array([[np.sqrt(3)/2, 1/2, 0, 0.1], 
+                [-1/2, np.sqrt(3)/2, 0, 0.2],
                 [0, 0, 1, 0],
                 [0, 0, 0, 1]])
 
@@ -43,8 +43,8 @@ def solve_tool(theta, option):
 
 bw = np.array([0.45, 0.47, 16.28 * np.pi / 180])
 
-Tbw = np.array([[0.96, 0.25, 0, 0.45],
-                [-0.25, 0.96, 0, -0.47],
+Tbw = np.array([[0.96, -0.25, 0, 0.55517123],
+                [0.25, 0.96, 0, -0.51906707],
                 [0, 0, 1, 0],
                 [0, 0, 0, 0]])
 

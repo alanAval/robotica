@@ -3,24 +3,29 @@ import utils
 
 
 def calculatevel(theta, currentpos, tf):
-    if currentpos == (len(theta) - 1) or currentpos == 0:
+    if currentpos >= (len(theta) - 2):
         return 0
-    leftinc = (theta[currentpos] - theta[currentpos - 1]) / tf
-    rightinc = (theta[currentpos + 1] - theta[currentpos]) / tf
+    leftinc = (theta[currentpos + 1] - theta[currentpos]) / tf
+    rightinc = (theta[currentpos + 2] - theta[currentpos + 1]) / tf
     if leftinc * rightinc > 0:
-        return leftinc + rightinc / 2
+        return (leftinc + rightinc) / 2
     else:
         return 0
 
 def cubcoef(th0, thf, thdot0, thdotf, tf):
+    thdot0 = 0
+    thdotf = 0
     a0 = th0
     a1 = thdot0
-    a2 = (3 / tf*tf)*(thf - th0) - (2 / thf) * thdot0 - thdotf / tf
-    a3 = - (2/np.power(tf, 3)) * (thf - th0) + (thdotf + thdot0) / tf * tf
+    a2 = ((3 / (tf*tf))*(thf - th0)) - ((2 / thf) * thdot0) - (thdotf / tf)
+    a3 = - ((2/np.power(tf, 3)) * (thf - th0)) + ((thdotf + thdot0) / (tf * tf))
+    result = a0 + a1*tf + a2*tf*tf + a3*tf*tf*tf
+    if np.abs(result - thf) > 0.0001:
+        print('Error :' + str(result))
     return np.array([a0, a1, a2, a3])
 
 def cubcoefs(splines, tf, Twt, l1, l2):
-    thdot0 = np.zeros(3)
+    thdot0 = np.array([0.0, 0.0, 0.0])
     theta = np.array([])
     tp = tf / (len(splines) - 1)
     for i in range(len(splines)):
@@ -33,10 +38,10 @@ def cubcoefs(splines, tf, Twt, l1, l2):
             theta = np.concatenate((theta, thetai), axis=0)
     print(theta)
 
-    coef = np.array([[]])
+    coef = np.array([[]], dtype=float)
     for i in range(len(splines) - 1):
         coefi = np.array([])
-        thdotfarray = np.array([])
+        thdotfarray = np.array([], dtype=float)
         for j in range(3):
             thdotf = calculatevel(theta[:, j], i, tp)
             coefj = np.array([cubcoef(theta[i][j], theta[i + 1][j], thdot0[j], thdotf, tp)])

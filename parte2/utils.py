@@ -65,3 +65,11 @@ def transform_frame(tab, tac):
     Tac = mount(tac[0], tac[1], tac[2])
 
     return Tac @ np.linalg.inv(Tab)
+
+def direct_kinemactics(theta, l1, l2, Twt):
+    T01 = mount(0, 0, theta[0])
+    T12 = mount(l1 * np.cos(theta[1]), l1 * np.sin(theta[1]), theta[1])
+    T23 = mount(l2 * np.cos(theta[2]), l2 * np.sin(theta[2]), theta[2])
+    T34 = mount(Twt[0], Twt[1], Twt[2])
+    T04 = T01 @ T12 @ T23 @ T34
+    return (T04, np.array([T04[0, 3], T04[1, 3], np.arccos(T04[0, 0]) * 180 / np.pi]))

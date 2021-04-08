@@ -1,10 +1,6 @@
 import numpy as np
 import veltrans as vt
 
-
-
-
-
 m1 = np.array([[np.sqrt(2)/2, np.sqrt(2)/2, 0, 0.6], 
                [-(np.sqrt(2)/2), np.sqrt(2)/2, 0, -0.3],
                [0, 0, 1, 0],
@@ -27,19 +23,6 @@ print(16.26 * np.pi / 180)
 print(np.sqrt(0.45*0.45 + 0.47*0.47))
 
 print(np.sqrt(0.1*0.1 + 0.2*0.2))
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 print('test 2')
 
