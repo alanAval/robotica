@@ -72,8 +72,8 @@ pyplot.figure(num=2, figsize=(20, 10))
 
 pos = np.empty((0, 3), float)
 
-for i in position:
-    pos = np.vstack((pos, utils.direct_kinemactics(i, 0.5, 0.5, Twt)[1]))
+for p in position:
+    pos = np.vstack((pos, utils.direct_kinemactics(p, 0.5, 0.5, Twt)[1]))
 
 x = pos[:, 0]
 y = pos[:, 1]
